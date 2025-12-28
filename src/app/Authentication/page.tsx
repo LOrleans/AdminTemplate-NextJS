@@ -2,9 +2,12 @@
 
 import AuthInput from "@/src/components/auth/AuthInput";
 import { GoogleIcon, WarningIcon } from "@/src/components/icons";
+import useAuth from "@/src/data/hook/useAuth";
 import { useState } from "react";
 
 export default function Authentication(){
+  const { user, loginGoogle } = useAuth()
+
   const [error, setError] = useState(null)
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [email, setEmail] = useState('')
@@ -78,7 +81,7 @@ export default function Authentication(){
         <hr className="my-6 border-gray-300 w-full"/>
 
         <button 
-          onClick={onSubmit}
+          onClick={loginGoogle}
           className={`flex flex-col justify-center items-center w-full bg-red-500 hover:bg-red-600 text-white rounded-lg px-4 py-3`}
         >
           {GoogleIcon}
@@ -89,18 +92,18 @@ export default function Authentication(){
           <p className="flex mt-4">
             New here?
             <a onClick={() => setMode('register')}>
-              <p className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer ml-1`}>
+              <span className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer ml-1`}>
                 Create a free account!
-              </p>
+              </span>
             </a>
           </p>
         ) : (
           <p className="flex mt-4">
             Are you already part of our community?
             <a onClick={() => setMode('login')}>
-              <p className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer ml-1`}>
+              <span className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer ml-1`}>
                 Log in with your credentials.
-              </p>
+              </span>
             </a>
           </p>
         )}
