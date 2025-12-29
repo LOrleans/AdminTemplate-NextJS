@@ -1,22 +1,29 @@
 'use client'
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-type Tema = 'dark' | ''
+// type Tema = 'dark' | ''
 
 interface AppContextProps {
-  theme?: Tema
+  theme?: string
   switchTheme?: () => void
 }
 
 const AppContext = createContext<AppContextProps>({})
 
 export function AppProvider(props: any){
-  const [theme, setTheme] = useState<Tema>('dark')
+  const [theme, setTheme] = useState('dark')
 
   function switchTheme(){
-    setTheme(theme === '' ? 'dark' : '')
+    const newTheme = theme === '' ? 'dark' : '' 
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
   }
+
+  useEffect(() => {
+    const saveTheme: string = localStorage.getItem('theme') ?? 'dark'
+    setTheme(saveTheme)
+  }, [])
 
   return (
     <AppContext.Provider value={{
